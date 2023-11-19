@@ -21,7 +21,7 @@ let
   };
 
 in pkgs.writeShellApplication {
-  name = "nvim";
+  name = "givim";
   runtimeInputs = [ neovimRuntimeDepentencies ];
   text = ''
     ${myNeovimUnwrapped}/bin/nvim "$@"
