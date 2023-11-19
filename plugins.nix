@@ -60,4 +60,6 @@ with pkgs.vimPlugins; [
   rainbow-delimiters-nvim
 
   twilight-nvim
+
+  nvim-colorizer-lua
 ]
