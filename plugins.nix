@@ -38,6 +38,7 @@ with pkgs.vimPlugins; [
   nvim-lspconfig
 
 # Autocompletion
+  ultisnips
   nvim-cmp
   cmp-treesitter
   cmp-path
