@@ -6,43 +6,38 @@
       url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     };
 
-    neovim = {
-      url = "github:neovim/neovim/stable?dir=contrib";
-      inputs.nixpkgs.follows = "nixpkgs";
+#    neovim = {
+#      url = "github:neovim/neovim/stable?dir=contrib";
+#      inputs.nixpkgs.follows = "nixpkgs";
+#    };
+
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
     };
   };
   
-  outputs = { self, nixpkgs, neovim }: 
-  let
-    forAllSystems = function:
-      nixpkgs.lib.genAttrs [
-        "x86_64-linux"
-        "x86_64-darwin"
-        "aarch64-linux"
-        "aarch64-darwin"
-      ] (system:
-        function (import nixpkgs {
-          inherit system;
-          overlays = [
-            (prev: final: { neovim = neovim.packages.${system}.default; })
-            (prev: final: { myNeovim = import ./packages/neovim.nix { pkgs = final; }; })
-          ];
-        }));
-    in {
-      packages = forAllSystems (pkgs: {
-        default = pkgs.myNeovim;
-      });
+  outputs = inputs @ { flake-parts, self, nixpkgs, ... }:
+  flake-parts.lib.mkFlake { inherit inputs; } {
+    systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
 
-      apps = forAllSystems (pkgs: rec {
-        nvim = {
-          type = "app";
-          program = "${pkgs.myNeovim}/bin/nvim";
-        };
-        default = nvim;
-      });
-
-      overlays.default = prev: final: {
-        neovim = final.myNeovim;
+    perSystem = { config, self', inputs, pkgs, system, ... }:
+    {
+      packages = rec {
+        givim = pkgs.callPackage ./packages/neovim.nix { inherit inputs; };
+        default = givim;
       };
+    };
+
+    flake = _: rec {
+      nixosModules.givim = import ./module.nix inputs.self;
+
+      nixosModules.home-manager = homeManagerModules.default;
+
+      homeManagerModules = rec {
+        givim = import ./module.nix inputs.self;
+        default = givim;
+      };
+    };
   };  
 }
