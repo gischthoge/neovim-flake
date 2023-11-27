@@ -33,6 +33,7 @@ with pkgs.vimPlugins; [
   nvim-treesitter-parsers.eex
   nvim-treesitter-parsers.bibtex
   nvim-treesitter-parsers.latex
+  nvim-treesitter-parsers.yuck
 
 # LSP
   nvim-lspconfig
