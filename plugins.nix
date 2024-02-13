@@ -38,6 +38,10 @@ with pkgs.vimPlugins; [
 # LSP
   nvim-lspconfig
 
+# prettier 
+  null-ls-nvim
+  prettier-nvim
+
 # Autocompletion
   ultisnips
   nvim-cmp

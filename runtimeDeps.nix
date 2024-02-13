@@ -9,5 +9,8 @@
     lua-language-server    #lua
     texlab                 #latex
     nodePackages.pyright   #python
+
+  # Prettier 
+    prettierd
   ];
 }
