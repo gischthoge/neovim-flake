@@ -4,7 +4,7 @@
 local prettier = require("prettier")
 
 prettier.setup({
-  bin = '{pkgs.prettierd}/bin/prettierd',
+  bin = '${pkgs.prettierd}/bin/prettierd',
   filetypes = {
     "css",
     "nix",
