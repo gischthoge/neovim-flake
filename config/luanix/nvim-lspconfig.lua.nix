@@ -9,10 +9,9 @@ local lsp = require("lspconfig")
 
 -- NIX 
 lsp.nil_ls.setup({
+ autostart = true,
  capabilities = capabilities,
-  cmd = {
-    "${pkgs.nil}/bin/nil",
-  }
+  cmd = { "${pkgs.nil}/bin/nil" }
 })
 
 -- Python

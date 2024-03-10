@@ -23,8 +23,12 @@
 
     csvtools = {
       url = "https://github.com/Decodetalkers/csv-tools.lua";
-      
-flake = false;};
+      flake = false;
+    };
+
+    nil = {
+      url = "github:oxalica/nil";
+    };
   };
   
   outputs = inputs @ { flake-parts, self, nixpkgs, ... }:
